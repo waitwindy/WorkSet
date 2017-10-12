@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="BOMC-ITOA" />
+        <module name="ssm_crud" />
+        <module name="ssm_crud2" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="BOMC-ITOA" target="1.8" />
+      <module name="ssm-crud" target="1.7" />
+      <module name="ssm_crud" target="1.8" />
+      <module name="ssm_crud2" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

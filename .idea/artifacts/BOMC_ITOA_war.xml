@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="BOMC-ITOA:war">
+    <output-path>$PROJECT_DIR$/../work/target</output-path>
+    <root id="archive" name="BOMC6.war">
+      <element id="artifact" artifact-name="BOMC-ITOA:war exploded" />
+    </root>
+  </artifact>
+</component>
