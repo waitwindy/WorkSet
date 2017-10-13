@@ -232,8 +232,20 @@
         var navEle = $("<nav></nav>").append(ul);
         navEle.appendTo("#page_nav_area");
     }
+//    完整的清空表单样式及内容
+    function reset_form(ele) {
+//       清空表单数据
+        $(ele)[0].reset();
+//       清空表单样式
+        $(ele).find("*").removeClass("has_error has_success");
+//        清空表单中所有的信息提示框
+        $(ele).find(".help-block").text("");
+    }
     
     $("#emp_add_model_btn").click(function () {
+//        清除表单数据
+//        $("#empAddModal form")[0].reset();
+        reset_form("#empAddModal form");
         getDepts();
         $("#empAddModal").modal({
             backdrop:"static"
@@ -262,7 +274,7 @@
     function  validata_add_form() {
 
        var empName= $("#empName_add_input").val();
-       var regName =/^[a-zA-Z]{6,30}$/;
+       var regName =/^[a-zA-Z0-9_-]{4,16}$|[\u4E00-\u9FA5]/;
        if(!regName.test(empName)){
 //           alert("用户名格式问题");
            show_validate_msg("#empName_add_input","error","用户名格式输入错误！！");
@@ -280,6 +292,7 @@
     }
     
     function  show_validate_msg(ele,status,msg) {
+
 //        校验之前将原有的格式去除掉。
         $(ele).parent().removeClass("has-success has-error");
         $(ele).next().text("");
@@ -293,12 +306,17 @@
         }
         
     }
-
+//单击按钮保存表单数据方法
     $("#emp_save_btn").click(function () {
 //        模态框中填写的数据进行校验。
             if(!validata_add_form()){
                 return false;
             }
+//            验证标签中的ajax-val是否是success
+            if ($(this).attr("ajax-va")=="error"){
+                return false;
+            }
+
 //         对提交给服务器的数据进行校验
 
 //     1.   模态框中的保存方法
@@ -317,6 +335,25 @@
         });
 
     });
+
+//    验证员工姓名是否可用
+    $("#empName_add_input").change(function () {
+        var empname=this.value;
+        $.ajax({
+            url:"${APP_PATH}/checkempname",
+            data:"empname="+empname,
+            type:"POST",
+            success:function (result) {
+                if (result.code==200){
+                    show_validate_msg("#empName_add_input","error",result.extend.va_msg);
+                    $("#emp_save_btn").attr("ajax-va","error");
+                }else{
+                    show_validate_msg("#empName_add_input","success",result.extend.va_msg);
+                    $("#emp_save_btn").attr("ajax-va","success");
+                }
+            }
+        })
+    })
 </script>
 </body>
 </html>
